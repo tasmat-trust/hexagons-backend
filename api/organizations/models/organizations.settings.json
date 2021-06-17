@@ -26,6 +26,11 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "user": {
+      "via": "organizations",
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }
