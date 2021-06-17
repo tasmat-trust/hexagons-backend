@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "Groups",
+  "info": {
+    "name": "Group"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "pupils": {
+      "via": "groups",
+      "collection": "pupil",
+      "dominant": true
+    }
+  }
+}
