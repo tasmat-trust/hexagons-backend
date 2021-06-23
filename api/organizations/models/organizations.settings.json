@@ -27,10 +27,11 @@
       "required": false,
       "pluginOptions": {}
     },
-    "user": {
-      "via": "organizations",
+    "users": {
       "plugin": "users-permissions",
-      "model": "user"
+      "collection": "user",
+      "via": "organizations",
+      "dominant": true
     }
   }
 }
