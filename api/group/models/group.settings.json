@@ -22,6 +22,15 @@
     },
     "organization": {
       "model": "organizations"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "users_permissions_users": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "groups",
+      "dominant": true
     }
   }
 }
