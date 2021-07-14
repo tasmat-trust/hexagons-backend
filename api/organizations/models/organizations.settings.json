@@ -32,6 +32,13 @@
       "collection": "user",
       "via": "organizations",
       "dominant": true
+    },
+    "school_type": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary"
+      ]
     }
   }
 }
