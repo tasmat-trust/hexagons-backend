@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "Modules",
+  "info": {
+    "name": "Module",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "subject": {
+      "model": "subject"
+    },
+    "capabilities": {
+      "via": "module",
+      "collection": "capability"
+    }
+  }
+}
