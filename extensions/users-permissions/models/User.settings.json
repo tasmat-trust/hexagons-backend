@@ -59,13 +59,12 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "organizations": {
-      "via": "users",
-      "collection": "organizations"
+    "organization": {
+      "model": "organizations"
     },
     "groups": {
-      "via": "users_permissions_users",
-      "collection": "group"
+      "collection": "group",
+      "via": "user"
     }
   }
 }

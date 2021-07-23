@@ -27,12 +27,6 @@
       "required": false,
       "pluginOptions": {}
     },
-    "users": {
-      "plugin": "users-permissions",
-      "collection": "user",
-      "via": "organizations",
-      "dominant": true
-    },
     "school_type": {
       "type": "enumeration",
       "enum": [
