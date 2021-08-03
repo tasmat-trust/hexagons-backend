@@ -15,8 +15,8 @@
     "level": {
       "type": "enumeration",
       "enum": [
-        "primary",
-        "secondary"
+        "step",
+        "stage"
       ]
     },
     "order": {

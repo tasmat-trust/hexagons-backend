@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "Levels",
+  "info": {
+    "name": "Level",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "subject": {
+      "model": "subject"
+    },
+    "module": {
+      "model": "module"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "complete",
+        "incomplete"
+      ]
+    },
+    "pupil": {
+      "model": "pupil"
+    },
+    "competencies": {
+      "via": "level",
+      "collection": "competency"
+    }
+  }
+}

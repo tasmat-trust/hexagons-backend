@@ -19,8 +19,8 @@
       "type": "integer"
     },
     "module": {
-      "model": "module",
-      "via": "capabilities"
+      "via": "capabilities",
+      "model": "module"
     }
   }
 }

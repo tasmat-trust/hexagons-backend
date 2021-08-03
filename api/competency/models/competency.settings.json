@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "competencies",
+  "info": {
+    "name": "competency",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "complete",
+        "incomplete",
+        "target"
+      ]
+    },
+    "adaptation": {
+      "type": "string"
+    },
+    "pupil": {
+      "model": "pupil"
+    },
+    "capability_fk": {
+      "type": "integer"
+    },
+    "capability_text": {
+      "type": "string"
+    },
+    "level": {
+      "model": "level",
+      "via": "competencies"
+    },
+    "subject": {
+      "model": "subject"
+    }
+  }
+}
