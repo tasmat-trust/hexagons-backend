@@ -31,6 +31,12 @@
     "competencies": {
       "via": "level",
       "collection": "competency"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "guidance": {
+      "type": "text"
     }
   }
 }

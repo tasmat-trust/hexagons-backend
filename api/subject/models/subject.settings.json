@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "Subjects",
   "info": {
-    "name": "Subject"
+    "name": "Subject",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -16,6 +17,9 @@
     },
     "slug": {
       "type": "string"
+    },
+    "isCore": {
+      "type": "boolean"
     }
   }
 }
