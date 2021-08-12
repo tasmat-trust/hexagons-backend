@@ -26,10 +26,11 @@
     "slug": {
       "type": "string"
     },
-    "user": {
-      "via": "groups",
+    "users": {
       "plugin": "users-permissions",
-      "model": "user"
+      "collection": "user",
+      "via": "groups",
+      "dominant": true
     }
   }
 }

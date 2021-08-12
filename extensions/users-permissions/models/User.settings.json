@@ -63,8 +63,8 @@
       "model": "organizations"
     },
     "groups": {
-      "collection": "group",
-      "via": "user"
+      "via": "users",
+      "collection": "group"
     }
   }
 }
