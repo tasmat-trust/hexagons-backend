@@ -28,6 +28,12 @@
     "capabilities": {
       "via": "module",
       "collection": "capability"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "guidance": {
+      "type": "text"
     }
   }
 }
