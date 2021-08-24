@@ -19,7 +19,32 @@
       "type": "string"
     },
     "isCore": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
+    },
+    "isEarlyDevelopment": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
+    "isExpressiveAndReceptiveLanguage": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
+    "isChildOf": {
+      "type": "enumeration",
+      "enum": [
+        "Computing",
+        "Science",
+        "Maths",
+        "English"
+      ]
+    },
+    "isRainbowAwards": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
     }
   }
 }
