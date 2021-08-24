@@ -36,9 +36,10 @@
       "type": "enumeration",
       "enum": [
         "Computing",
-        "Science",
+        "Communication",
+        "English",
         "Maths",
-        "English"
+        "Science"
       ]
     },
     "isRainbowAwards": {
