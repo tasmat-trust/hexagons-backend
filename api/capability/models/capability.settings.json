@@ -21,6 +21,10 @@
     "module": {
       "via": "capabilities",
       "model": "module"
+    },
+    "guidance": {
+      "via": "capability",
+      "collection": "guidance"
     }
   }
 }

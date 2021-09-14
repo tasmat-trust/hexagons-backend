@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "Pupils",
+  "collectionName": "guidance",
   "info": {
-    "name": "Pupil",
+    "name": "Guidance",
     "description": ""
   },
   "options": {
@@ -12,15 +12,12 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
-      "type": "string"
+    "capability": {
+      "model": "capability",
+      "via": "guidance"
     },
-    "groups": {
-      "via": "pupils",
-      "collection": "group"
-    },
-    "organization": {
-      "model": "organizations"
+    "text": {
+      "type": "text"
     }
   }
 }
