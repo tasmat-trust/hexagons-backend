@@ -33,6 +33,9 @@
         "primary",
         "secondary"
       ]
+    },
+    "email_domains": {
+      "type": "string"
     }
   }
 }
