@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: Hexagons Backend
+    name: hexagons-backend
     env: node
     plan: starter
     buildCommand: yarn install && yarn build
