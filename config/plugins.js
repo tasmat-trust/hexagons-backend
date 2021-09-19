@@ -2,11 +2,11 @@ module.exports = ({ env }) => ({
   email: {
     provider: 'smtp',
     providerOptions: {
-      host: 'smtp.gmail.com', //SMTP Host
-      port: 465   , //SMTP Port
+      host: env('SMTP_HOST'), //SMTP Host
+      port: env('SMTP_PORT')   , //SMTP Port
       secure: true,
-      username: env('GMAIL_EMAIL'),
-      password: env('GMAIL_PASSWORD'),
+      username: env('ROBOT_EMAIL'),
+      password: env('ROBOT_PASSWORD'),
       rejectUnauthorized: true,
       requireTLS: true,
       connectionTimeout: 1,
