@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/user-password-generators",
+      "handler": "user-password-generator.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/user-password-generators/count",
+      "handler": "user-password-generator.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/user-password-generators/:id",
+      "handler": "user-password-generator.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/user-password-generators",
+      "handler": "user-password-generator.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/user-password-generators/:id",
+      "handler": "user-password-generator.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/user-password-generators/:id",
+      "handler": "user-password-generator.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
