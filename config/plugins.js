@@ -3,8 +3,7 @@ module.exports = ({ env }) => ({
     provider: 'smtp',
     providerOptions: {
       host: env('SMTP_HOST'), //SMTP Host
-      port: env('SMTP_PORT')   , //SMTP Port
-      secure: true,
+      port: env('SMTP_PORT'), //SMTP Port
       username: env('ROBOT_EMAIL'),
       password: env('ROBOT_PASSWORD'),
       rejectUnauthorized: true,
