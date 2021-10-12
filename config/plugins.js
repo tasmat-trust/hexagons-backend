@@ -12,8 +12,8 @@ module.exports = ({ env }) => ({
       connectionTimeout: 1,
     },
     settings: {
-      from: env('GMAIL_EMAIL'),
-      replyTo: env('GMAIL_EMAIL'),
+      from: env('ROBOT_EMAIL'),
+      replyTo: env('ROBOT_EMAIL'),
     },
   },
 });
