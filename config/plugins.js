@@ -1,18 +1,19 @@
 module.exports = ({ env }) => ({
   email: {
-    provider: 'nodemailer',
+    provider: 'smtp',
     providerOptions: {
-      host: env('SMTP_HOST'),
-      port: env('SMTP_PORT'),
+      host: env('SMTP_HOST'), //SMTP Host
+      port: env('SMTP_PORT')   , //SMTP Port
       secure: true,
-      auth: {
-        user: env('ROBOT_EMAIL'),
-        pass: env('ROBOT_PASSWORD'),
-      },
+      username: env('ROBOT_EMAIL'),
+      password: env('ROBOT_PASSWORD'),
+      rejectUnauthorized: true,
+      requireTLS: true,
+      connectionTimeout: 1,
     },
     settings: {
-      defaultFrom: env('ROBOT_EMAIL'),
-      defaultReplyTo: 'nshuttleworth@tasmat.org.uk',
+      from: env('ROBOT_EMAIL'),
+      replyTo: env('ROBOT_EMAIL'),
     },
   },
 });
