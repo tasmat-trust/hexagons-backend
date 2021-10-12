@@ -13,7 +13,7 @@ module.exports = ({ env }) => ({
     },
     settings: {
       defaultFrom: env("ROBOT_EMAIL"),
-      defaultReplyTo: env("ROBOT_EMAIL"),
+      defaultReplyTo: env("HUMAN_EMAIL"),
     },
   },
 });
