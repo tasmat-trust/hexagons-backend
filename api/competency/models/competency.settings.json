@@ -35,9 +35,6 @@
     "level": {
       "via": "competencies",
       "model": "level"
-    },
-    "subject": {
-      "model": "subject"
     }
   }
 }
