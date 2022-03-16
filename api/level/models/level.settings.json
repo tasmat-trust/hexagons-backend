@@ -22,6 +22,9 @@
       "type": "enumeration",
       "enum": [
         "complete",
+        "secure",
+        "developing",
+        "emerging",
         "incomplete"
       ]
     },
@@ -37,6 +40,9 @@
     },
     "guidance": {
       "type": "text"
+    },
+    "wasQuickAssessed": {
+      "type": "boolean"
     }
   }
 }
