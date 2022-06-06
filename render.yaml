@@ -26,4 +26,4 @@ services:
 
 databases:
   - name: strapi
-    plan: starter
+    plan: standard
