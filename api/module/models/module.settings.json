@@ -16,7 +16,8 @@
       "type": "enumeration",
       "enum": [
         "step",
-        "stage"
+        "stage",
+        "unit"
       ]
     },
     "order": {

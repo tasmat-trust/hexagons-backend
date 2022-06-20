@@ -3,9 +3,9 @@ services:
     name: hexagons-backend
     env: node
     plan: starter
-    buildCommand: yarn install && yarn build
-    startCommand: yarn start
-    healthCheckPath: /_health
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /admin
     disk:
       name: strapi-uploads
       mountPath: /opt/render/project/src/public/uploads
@@ -26,4 +26,4 @@ services:
 
 databases:
   - name: strapi
-    plan: starter
+    plan: standard
