@@ -1,4 +1,16 @@
 module.exports = ({ env }) => ({
+  graphql: {
+    endpoint: '/graphql',
+    shadowCRUD: true,
+    playgroundAlways: false,
+    depthLimit: 7,
+    amountLimit: 2500,
+    shareEnabled: false,
+    federation: false,
+    apolloServer: {
+      tracing: false,
+    },
+  },
   email: {
     provider: "nodemailer",
     providerOptions: {
@@ -17,3 +29,4 @@ module.exports = ({ env }) => ({
     },
   },
 });
+ 
