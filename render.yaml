@@ -30,6 +30,8 @@ envVarGroups:
     value: CHANGE-ME
   - key: ROBOT_PASSWORD
     value: CHANGE-ME
+  - key: CUSTOM_URL
+    value: https://foo-backend.hexagons.app
   - key: SMTP_HOST
     value: smtp.office365.com
   - key: SMTP_PORT
