@@ -22,6 +22,11 @@
       "type": "boolean",
       "default": false
     },
+    "isTransition": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
     "isEarlyDevelopment": {
       "type": "boolean",
       "default": false,
