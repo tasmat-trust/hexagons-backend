@@ -36,6 +36,12 @@
     },
     "email_domains": {
       "type": "string"
+    },
+    "use_early_development": {
+      "type": "boolean"
+    },
+    "use_rainbow_awards": {
+      "type": "boolean"
     }
   }
 }
