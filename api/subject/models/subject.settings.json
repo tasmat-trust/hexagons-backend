@@ -46,13 +46,13 @@
         "Maths",
         "Science",
         "PSHE",
-        "Personal-social-and-emotional-development",
-        "Communication-and-language",
-        "Physical-development",
+        "PersonalSocialAndEmotionalDevelopment",
+        "CommunicationAndLanguage",
+        "PhysicalDevelopment",
         "Literacy",
         "Mathematics",
-        "Understanding-the-world",
-        "Expressive-arts-and-design"
+        "UnderstandingTheWorld",
+        "ExpressiveArtsAndDesign"
       ]
     },
     "isRainbowAwards": {
