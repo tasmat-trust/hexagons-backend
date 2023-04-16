@@ -32,6 +32,11 @@
       "default": false,
       "unique": false
     },
+    "isFunctionalSkills": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
     "isExpressiveAndReceptiveLanguage": {
       "type": "boolean",
       "default": false,
