@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "Pupils",
+  "collectionName": "pupils",
   "info": {
-    "name": "Pupil",
+    "name": "pupil",
     "description": ""
   },
   "options": {

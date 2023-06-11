@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "Levels",
+  "collectionName": "levels",
   "info": {
-    "name": "Level",
+    "name": "level",
     "description": ""
   },
   "options": {

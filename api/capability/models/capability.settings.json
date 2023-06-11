@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "Capabilities",
+  "collectionName": "capabilities",
   "info": {
-    "name": "Capability",
+    "name": "capability",
     "description": ""
   },
   "options": {

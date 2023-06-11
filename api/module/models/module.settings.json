@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "Modules",
+  "collectionName": "modules",
   "info": {
-    "name": "Module",
+    "name": "module",
     "description": ""
   },
   "options": {

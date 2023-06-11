@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "Organizations",
+  "collectionName": "organizations",
   "info": {
-    "name": "Organization",
+    "name": "organization",
     "description": ""
   },
   "options": {

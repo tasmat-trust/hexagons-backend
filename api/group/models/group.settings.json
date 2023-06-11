@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "Groups",
+  "collectionName": "groups",
   "info": {
-    "name": "Group",
+    "name": "group",
     "description": ""
   },
   "options": {
