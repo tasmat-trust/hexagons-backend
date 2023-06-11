@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "modules",
+  "info": {
+    "singularName": "module",
+    "pluralName": "modules",
+    "displayName": "Module",
+    "name": "module"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "step",
+        "stage",
+        "unit",
+        "band",
+        "phase"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "subject": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subject.subject"
+    },
+    "capabilities": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::capability.capability",
+      "mappedBy": "module"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "guidance": {
+      "type": "text"
+    }
+  }
+}
