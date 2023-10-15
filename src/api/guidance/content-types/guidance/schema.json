@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guidance",
+  "info": {
+    "singularName": "guidance",
+    "pluralName": "guidances",
+    "displayName": "Guidance",
+    "name": "guidance"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "capability": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::capability.capability",
+      "inversedBy": "guidance"
+    },
+    "text": {
+      "type": "text"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

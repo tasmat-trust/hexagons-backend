@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "capabilities",
+  "info": {
+    "singularName": "capability",
+    "pluralName": "capabilities",
+    "displayName": "Capability",
+    "name": "capability"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "module": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::module.module",
+      "inversedBy": "capabilities"
+    },
+    "guidance": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::guidance.guidance",
+      "mappedBy": "capability"
+    }
+  }
+}

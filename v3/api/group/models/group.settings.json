@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "groups",
+  "info": {
+    "name": "group",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "pupils": {
+      "via": "groups",
+      "collection": "pupil",
+      "dominant": true
+    },
+    "organization": {
+      "model": "organizations"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "users": {
+      "plugin": "users-permissions",
+      "collection": "user",
+      "via": "groups",
+      "dominant": true
+    }
+  }
+}

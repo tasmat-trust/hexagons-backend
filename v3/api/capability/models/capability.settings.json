@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "capabilities",
+  "info": {
+    "name": "capability",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "module": {
+      "via": "capabilities",
+      "model": "module"
+    },
+    "guidance": {
+      "via": "capability",
+      "collection": "guidance"
+    }
+  }
+}

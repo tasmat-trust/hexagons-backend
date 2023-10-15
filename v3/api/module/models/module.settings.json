@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "modules",
+  "info": {
+    "name": "module",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "step",
+        "stage",
+        "unit",
+        "band",
+        "phase"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "subject": {
+      "model": "subject"
+    },
+    "capabilities": {
+      "via": "module",
+      "collection": "capability"
+    },
+    "summary": {
+      "type": "text"
+    },
+    "guidance": {
+      "type": "text"
+    }
+  }
+}

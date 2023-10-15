@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guidance",
+  "info": {
+    "name": "guidance",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "capability": {
+      "model": "capability",
+      "via": "guidance"
+    },
+    "text": {
+      "type": "text"
+    },
+    "users_permissions_user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}

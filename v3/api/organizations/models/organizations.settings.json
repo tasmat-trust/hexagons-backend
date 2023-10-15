@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "organizations",
+  "info": {
+    "name": "organization",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "logo": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "school_type": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary"
+      ]
+    },
+    "email_domains": {
+      "type": "string"
+    },
+    "use_early_development": {
+      "type": "boolean"
+    },
+    "use_functional_skills": {
+      "type": "boolean"
+    },
+    "use_rainbow_awards": {
+      "type": "boolean"
+    }
+  }
+}

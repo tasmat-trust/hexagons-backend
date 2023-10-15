@@ -1,0 +1,80 @@
+{
+  "kind": "collectionType",
+  "collectionName": "subjects",
+  "info": {
+    "name": "subject",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "isCore": {
+      "type": "boolean",
+      "default": false
+    },
+    "isTransition": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
+    "isEarlyDevelopment": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
+    "isFunctionalSkills": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
+    "isExpressiveAndReceptiveLanguage": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
+    "isChildOf": {
+      "type": "enumeration",
+      "enum": [
+        "Computing",
+        "Communication",
+        "English",
+        "Maths",
+        "Science",
+        "PSHE",
+        "PersonalSocialAndEmotionalDevelopment",
+        "CommunicationAndLanguage",
+        "PhysicalDevelopment",
+        "Literacy",
+        "Mathematics",
+        "UnderstandingTheWorld",
+        "ExpressiveArtsAndDesign",
+        "FunctionalMaths",
+        "FunctionalEnglish",
+        "FunctionalICT"
+
+      ]
+    },
+    "isRainbowAwards": {
+      "type": "boolean",
+      "default": false,
+      "unique": false
+    },
+    "excludeEarlyDevelopmentStep": {
+      "type": "boolean",
+      "default": false
+    },
+    "organization": {
+      "model": "organizations"
+    }
+  }
+}

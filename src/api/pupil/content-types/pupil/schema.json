@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pupils",
+  "info": {
+    "singularName": "pupil",
+    "pluralName": "pupils",
+    "displayName": "Pupil",
+    "name": "pupil"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::group.group",
+      "mappedBy": "pupils"
+    },
+    "organization": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::organization.organization"
+    }
+  }
+}

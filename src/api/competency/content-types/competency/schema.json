@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "competencies",
+  "info": {
+    "singularName": "competency",
+    "pluralName": "competencies",
+    "displayName": "Competency",
+    "name": "competency"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "complete",
+        "incomplete",
+        "target"
+      ]
+    },
+    "adaptation": {
+      "type": "string"
+    },
+    "pupil": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pupil.pupil"
+    },
+    "capability_fk": {
+      "type": "integer"
+    },
+    "capability_text": {
+      "type": "string"
+    },
+    "level": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::level.level",
+      "inversedBy": "competencies"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pupils",
+  "info": {
+    "name": "pupil",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "groups": {
+      "via": "pupils",
+      "collection": "group"
+    },
+    "organization": {
+      "model": "organizations"
+    }
+  }
+}
