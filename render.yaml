@@ -53,6 +53,6 @@ envVarGroups:
   - key: DATABASE_SCHEMA
     value: public
 databases:
-  - name: strapi
+  - name: strapi-v4
     plan: standard
     region: frankfurt
