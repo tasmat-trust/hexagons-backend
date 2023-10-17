@@ -5,14 +5,7 @@ const {
   sortSubjects,
 } = require("./utils/reports");
 
-const getPupilReport = async (pupilId, groupedSubjects) => {
-  const pupil = await strapi.services["api::pupil.pupil"].findOne(pupilId, {
-    populate: "*",
-  });
-  if (!pupil) {
-    throw new Error("Pupil not found");
-  }
-
+const getLevelsWithModules = async () => {
   const levels = await strapi.entityService.findMany("api::level.level", {
     populate: "*",
     paginate: {
@@ -37,52 +30,63 @@ const getPupilReport = async (pupilId, groupedSubjects) => {
       };
     })
   );
+  return levelsWithModules;
+};
 
-  const pupilSubjectReports = groupedSubjects
-    .map((subject, i) => {
-      const subjectReportBlock = subject.subjects.map((subject) => {
-        const filteredLevelsBySubject = levelsWithModules.filter((level) => {
-          if (!level.subject) {
-            return false;
-          }
-          return level.subject.id === subject.id;
-        });
+const getPupilReport = async (
+  pupilId,
+  groupedSubjects,
+  flattenedSubjects,
+  levelsWithModules
+) => {
+  const pupil = await strapi.services["api::pupil.pupil"].findOne(pupilId, {
+    populate: "*",
+  });
+  if (!pupil) {
+    throw new Error("Pupil not found");
+  }
 
-        const filteredLevelsByPupil = filteredLevelsBySubject.filter(
-          (level) => {
-            if (!level.pupil) {
-              return false;
-            }
-            return level.pupil.id === pupil.id;
-          }
-        );
-        const withModuleOrders = filteredLevelsByPupil.filter((level) => {
-          return level.module && level.module.order && level.module.level;
-        });
+  console.log("Generating pupil report for", pupil.name);
 
-        const withLevelStatus = withModuleOrders.filter((level) => {
-          return level.status;
-        });
+  const pupilSubjectReports = flattenedSubjects.map((subject) => {
+    const filteredLevelsBySubject = levelsWithModules.filter((level) => {
+      if (!level.subject) {
+        return false;
+      }
+      return level.subject.id === subject.id;
+    });
 
-        const currentLevel = getCurrentLevel(withLevelStatus);
-        if (currentLevel) {
-          const score = getModuleLabel(currentLevel);
-          return {
-            id: subject.id,
-            subject: subject,
-            score,
-          };
-        }
-        return {
-          id: subject.id,
-          subject: subject,
-          score: 0,
-        };
-      });
-      return subjectReportBlock;
-    })
-    .flat();
+    const filteredLevelsByPupil = filteredLevelsBySubject.filter((level) => {
+      if (!level.pupil) {
+        return false;
+      }
+      return level.pupil.id === pupil.id;
+    });
+    const withModuleOrders = filteredLevelsByPupil.filter((level) => {
+      return level.module && level.module.order && level.module.level;
+    });
 
+    const withLevelStatus = withModuleOrders.filter((level) => {
+      return level.status;
+    });
+
+    const currentLevel = getCurrentLevel(withLevelStatus);
+    if (currentLevel) {
+      const score = getModuleLabel(currentLevel);
+      return {
+        id: subject.id,
+        subject: subject,
+        score,
+      };
+    }
+    return {
+      id: subject.id,
+      subject: subject,
+      score: 0,
+    };
+  });
+
+  console.log("Generated pupil report for", pupil.name);
   return {
     id: pupilId,
     name: pupil?.name ?? "Alan",
@@ -145,8 +149,16 @@ module.exports = {
               if (!subjects) {
                 throw new Error("Subjects not found");
               }
-              const groupedSubjects = sortSubjects(subjects.results);
-              return await getPupilReport(pupilId, groupedSubjects);
+              const { groupedSubjects, flattenedSubjects } = sortSubjects(
+                subjects.results
+              );
+              const levelsWithModules = getLevelsWithModules();
+              return await getPupilReport(
+                pupilId,
+                groupedSubjects,
+                flattenedSubjects,
+                levelsWithModules
+              );
             },
           },
           groupReport: {
@@ -157,7 +169,10 @@ module.exports = {
               if (!subjects) {
                 throw new Error("Subjects not found");
               }
-              const groupedSubjects = sortSubjects(subjects.results);
+              const { groupedSubjects, flattenedSubjects } = sortSubjects(
+                subjects.results
+              );
+
               const group = await strapi.services["api::group.group"].findOne(
                 groupId,
                 {
@@ -167,13 +182,28 @@ module.exports = {
               if (!group) {
                 throw new Error("Group not found");
               }
+              console.log(`Generating group report for ${group.name}`);
 
               if (group.orgId && group.orgId !== orgId) {
                 throw new Error("Incorrect organisation for this group");
               }
 
-              const pupilReports = group.pupils.map(async (pupil) => {
-                return await getPupilReport(pupil.id, groupedSubjects);
+              console.log("Getting levels");
+
+              const levelsWithModules = await getLevelsWithModules();
+
+              const pupilReports = group.pupils.map(async (pupil, i) => {
+                console.log(
+                  `Processing pupil ${pupil.id}, ${i + 1} of ${
+                    group.pupils.length
+                  }`
+                );
+                return await getPupilReport(
+                  pupil.id,
+                  groupedSubjects,
+                  flattenedSubjects,
+                  levelsWithModules
+                );
               });
 
               return {

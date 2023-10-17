@@ -4,7 +4,9 @@
 
 Go to the blueprint in Render backend and accept the creation of the new strapi-v4 database.
 
-Start a session with `psql -U postgres`
+Trigger a fresh backup of the existing database.
+
+In your local system, start a session with `psql -U postgres`
 
 Create a new local postgres user with the same credentials as the user associated with the newly-provisioned database:
 
@@ -16,7 +18,7 @@ Setup two new local databases using PGAdmin. One named [school]-v3-[db-user] and
 
 ### Prepare old DB
 
-Visit Render to take a download of the latest backup, and extract it as an SQL file.
+Go back to Render to download the latest backup, and extract it as an SQL file.
 
 Import the SQL export into the new local DB, where the username is the same as the new strapi-v4 database:
 
@@ -51,17 +53,19 @@ DATABASE_SSL=false
 DATABASE_V4_HOST=127.0.0.1
 DATABASE_V4_PORT=5432
 DATABASE_V4_USER=[db_user]
-DATABASE_V4_PASSWORD=tnyzYG1jG7BGsrdlaoDeWwcCmhZ2Uuqw
+DATABASE_V4_PASSWORD=[password]
 DATABASE_V4_DATABASE=[v4-db-name]
 DATABASE_V4_SCHEMA=public
 DATABASE_SSL=false
 ```
 
-Run the migration script
+Run the migration script with `yarn start`
 
 ## Restore new Render DB with migrated DB
 
-Connect to the Render DB in pgAdmin 4.  Download a backup of the new v4 database, remembering to name it with .sql suffix.
+Connect to the Render DB in pgAdmin 4.  
+
+Download a backup of the new v4 database, remembering to name it with .sql suffix.
 
 In between tries, you will need to completely clear the target database:
 

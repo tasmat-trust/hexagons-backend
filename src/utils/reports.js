@@ -44,7 +44,16 @@ const sortSubjects = (subjects) => {
   subjects = [...subjectsWithParents, remainingSubjects, rainbowAwards];
 
   subjects.sort(byCoreSubjects);
-  return subjects;
+
+  const flattenedSubjects = subjects
+    .map((subject) => {
+      return subject.subjects.map((s) => s);
+    })
+    .flat();
+  return {
+    groupedSubjects: subjects,
+    flattenedSubjects: flattenedSubjects,
+  };
 };
 
 function getPercentComplete(competencies, capabilities) {
