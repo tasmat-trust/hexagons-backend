@@ -2,7 +2,7 @@ services:
   - type: web
     name: hexagons-backend
     env: node
-    plan: starter
+    plan: standard
     buildCommand: yarn && yarn build
     startCommand: yarn start
     healthCheckPath: /admin
