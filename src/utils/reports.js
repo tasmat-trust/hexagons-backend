@@ -31,12 +31,12 @@ const sortSubjects = (subjects) => {
   const rainbowAwards = {
     name: "Rainbow Awards",
     isCore: false,
-    subjects: normalSubjects.filter((subject) => subject.isRainbowAward),
+    subjects: normalSubjects.filter((subject) => subject.isRainbowAwards),
   };
   const remainingSubjects = {
     name: "Remaining subjects",
     isCore: false,
-    subjects: normalSubjects.filter((subject) => !subject.isRainbowAward),
+    subjects: normalSubjects.filter((subject) => !subject.isRainbowAwards),
   };
 
   subjectsWithParents.sort((a, b) => a.name.localeCompare(b.name));
