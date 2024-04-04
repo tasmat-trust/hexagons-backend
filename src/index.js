@@ -145,7 +145,11 @@ module.exports = {
             resolve: async (parent, { pupilId }, context) => {
               const subjects = await strapi.services[
                 "api::subject.subject"
-              ].find();
+              ].find({
+                pagination: {
+                  limit: -1,
+                },
+              });
               if (!subjects) {
                 throw new Error("Subjects not found");
               }
@@ -165,7 +169,11 @@ module.exports = {
             resolve: async (parent, { groupId, orgId }, context) => {
               const subjects = await strapi.services[
                 "api::subject.subject"
-              ].find();
+              ].find({
+                pagination: {
+                  limit: -1,
+                },
+              });
               if (!subjects) {
                 throw new Error("Subjects not found");
               }
