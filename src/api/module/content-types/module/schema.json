@@ -21,7 +21,8 @@
         "stage",
         "unit",
         "band",
-        "phase"
+        "phase",
+        "award"
       ]
     },
     "order": {

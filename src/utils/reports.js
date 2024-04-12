@@ -96,6 +96,7 @@ function sortLevelBy(items, level) {
 function sortLevels(levels) {
   let sortedLevels = levels;
   sortedLevels = sortedLevels.sort((a, b) => a.module.order - b.module.order);
+  sortedLevels = sortLevelBy(sortedLevels, "award");
   sortedLevels = sortLevelBy(sortedLevels, "phase");
   sortedLevels = sortLevelBy(sortedLevels, "band");
   sortedLevels = sortLevelBy(sortedLevels, "stage");
