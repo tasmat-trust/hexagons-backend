@@ -54,5 +54,5 @@ envVarGroups:
     value: public
 databases:
   - name: strapi-v4
-    plan: standard
+    plan: professional
     region: frankfurt
