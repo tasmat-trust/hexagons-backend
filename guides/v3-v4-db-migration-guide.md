@@ -4,6 +4,8 @@
 
 Go to the blueprint in Render backend and accept the creation of the new strapi-v4 database.
 
+Find the backend-v4 env group and update all the values to match the new database. Save this for later.
+
 Trigger a fresh backup of the existing database.
 
 In your local system, start a session with `psql -U postgres`
@@ -31,7 +33,7 @@ Configure this project to point to the version 4 database in .env and run the se
 ### Run the migration script
 
 
-Use the [Strapi migration scripts](https://github.com/strapi/migration-scripts). N.B. there is a branch in a fork of the repo that successfully imports many-to-many relations. See the PR here and if it hasn't been merged, use that fork: https://github.com/strapi/migration-scripts/pull/100
+Use our forked version of the [Strapi migration scripts](https://github.com/tasmat-trust/migration-scripts).
 
 Copy the following as .env into the root of the v3-v4-sql migration folder:
 
