@@ -107,122 +107,166 @@ module.exports = {
     // Custom query resolver to get all authors and their details.
     extensionService.use(({ strapi }) => ({
       typeDefs: `
-            type Query {
-              pupilReport(pupilId: ID!): PupilReport
-              groupReport(groupId: ID!, orgId: ID!): GroupReport
-            }
-    
-            type PupilSubjectReport {
-              id: ID
-              subject: Subject
-              score: Float
-            }
+        type Query {
+          pupilReport(pupilId: ID!): PupilReport
+          groupReport(groupId: ID!, orgId: ID!): GroupReport
+        }
+        type PupilSubjectReport {
+          id: ID
+          subject: Subject
+          score: Float
+        }
 
-            type ParentSubject {
-              name: String
-              isCore: Boolean
-              subjects: [Subject]
-            }
+        type ParentSubject {
+          name: String
+          isCore: Boolean
+          subjects: [Subject]
+        }
     
-            type PupilReport {
-              id: ID
-              name: String              
-              subjectReports: [PupilSubjectReport]
-            }
+        type PupilReport {
+          id: ID
+          name: String              
+          subjectReports: [PupilSubjectReport]
+        }
 
-            type GroupReport {
-              id: ID
-              name: String 
-              groupedSubjects: [ParentSubject]
-              pupils: [PupilReport]
-            }
+        type GroupReport {
+          id: ID
+          name: String 
+          groupedSubjects: [ParentSubject]
+          pupils: [PupilReport]
+        }
     
-          `,
+        `,
 
       resolvers: {
-        Query: {
-          pupilReport: {
-            resolve: async (parent, { pupilId }, context) => {
-              const subjects = await strapi.services[
-                "api::subject.subject"
-              ].find({
-                pagination: {
-                  limit: -1,
-                },
-              });
-              if (!subjects) {
-                throw new Error("Subjects not found");
-              }
-              const { groupedSubjects, flattenedSubjects } = sortSubjects(
-                subjects.results
-              );
-              const levelsWithModules = getLevelsWithModules();
-              return await getPupilReport(
-                pupilId,
-                groupedSubjects,
-                flattenedSubjects,
-                levelsWithModules
-              );
-            },
+      Query: {
+        pupilReport: {
+        resolve: async (parent, { pupilId }, context) => {
+          const subjects = await strapi.services[
+          "api::subject.subject"
+          ].find({
+          pagination: {
+            limit: -1,
           },
-          groupReport: {
-            resolve: async (parent, { groupId, orgId }, context) => {
-              const subjects = await strapi.services[
-                "api::subject.subject"
-              ].find({
-                pagination: {
-                  limit: -1,
-                },
-              });
-              if (!subjects) {
-                throw new Error("Subjects not found");
-              }
-              const { groupedSubjects, flattenedSubjects } = sortSubjects(
-                subjects.results
-              );
-
-              const group = await strapi.services["api::group.group"].findOne(
-                groupId,
-                {
-                  populate: ["pupils"],
-                }
-              );
-              if (!group) {
-                throw new Error("Group not found");
-              }
-              console.log(`Generating group report for ${group.name}`);
-
-              if (group.orgId && group.orgId !== orgId) {
-                throw new Error("Incorrect organisation for this group");
-              }
-
-              console.log("Getting levels");
-
-              const levelsWithModules = await getLevelsWithModules();
-
-              const pupilReports = group.pupils.map(async (pupil, i) => {
-                console.log(
-                  `Processing pupil ${pupil.id}, ${i + 1} of ${
-                    group.pupils.length
-                  }`
-                );
-                return await getPupilReport(
-                  pupil.id,
-                  groupedSubjects,
-                  flattenedSubjects,
-                  levelsWithModules
-                );
-              });
-
-              return {
-                id: groupId,
-                name: group.name,
-                groupedSubjects: groupedSubjects,
-                pupils: pupilReports,
-              };
-            },
-          },
+          });
+          if (!subjects) {
+          throw new Error("Subjects not found");
+          }
+          const { groupedSubjects, flattenedSubjects } = sortSubjects(
+          subjects.results
+          );
+          const levelsWithModules = getLevelsWithModules();
+          return await getPupilReport(
+          pupilId,
+          groupedSubjects,
+          flattenedSubjects,
+          levelsWithModules
+          );
         },
+        },
+        groupReport: {
+        resolve: async (parent, { groupId, orgId }, context) => {
+          const subjects = await strapi.services[
+          "api::subject.subject"
+          ].find({
+          pagination: {
+            limit: -1,
+          },
+          });
+          if (!subjects) {
+          throw new Error("Subjects not found");
+          }
+          const { groupedSubjects, flattenedSubjects } = sortSubjects(
+          subjects.results
+          );
+
+          const group = await strapi.services["api::group.group"].findOne(
+          groupId,
+          {
+            populate: ["pupils"],
+          }
+          );
+          if (!group) {
+          throw new Error("Group not found");
+          }
+          console.log(`Generating group report for ${group.name}`);
+
+          if (group.orgId && group.orgId !== orgId) {
+          throw new Error("Incorrect organisation for this group");
+          }
+
+          console.log("Getting levels");
+
+          const levelsWithModules = await getLevelsWithModules();
+
+          const pupilReports = group.pupils.map(async (pupil, i) => {
+          console.log(
+            `Processing pupil ${pupil.id}, ${i + 1} of ${
+            group.pupils.length
+            }`
+          );
+          return await getPupilReport(
+            pupil.id,
+            groupedSubjects,
+            flattenedSubjects,
+            levelsWithModules
+          );
+          });
+
+          return {
+          id: groupId,
+          name: group.name,
+          groupedSubjects: groupedSubjects,
+          pupils: pupilReports,
+          };
+        },
+        },
+      },
+      Mutation: {
+        createCompetency: {
+        resolve: async (parent, args, context) => {
+          // First, let Strapi handle the normal create
+          const defaultResult = await strapi.entityService.create(
+          'api::competency.competency',
+          { data: args.data }
+          );
+
+          // Then run our custom logic
+          await strapi
+          .service('api::competency.competency')
+          .updateCustomCompetency({
+            id: defaultResult.id,
+            status: args.data.status,
+            adaptation: args.data.adaptation
+          });
+
+          // Return the default result to maintain consistency
+          return { data: defaultResult };
+        },
+        },
+        updateCompetency: {
+        resolve: async (parent, args, context) => {
+          // First, let Strapi handle the normal update
+          const defaultResult = await strapi.entityService.update(
+          'api::competency.competency',
+          args.id,
+          { data: args.data }
+          );
+
+          // Then run our custom logic
+          await strapi
+          .service('api::competency.competency')
+          .updateCustomCompetency({
+            id: args.id,
+            status: args.data.status,
+            adaptation: args.data.adaptation
+          });
+
+          // Return the default result to maintain consistency
+          return { data: defaultResult };
+        },
+        },
+      },
       },
     }));
   },

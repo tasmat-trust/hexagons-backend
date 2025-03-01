@@ -140,6 +140,7 @@ function getNormalisedModuleNumber(level) {
     : level.module.order;
 }
 
+// Will continue working if level.percentComplete is baked in
 function getModuleLabel(level) {
   // Below returns e.g. 1.45, 7.45
   let normalisedModuleNumber = getNormalisedModuleNumber(level);

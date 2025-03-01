@@ -5,11 +5,10 @@
     "singularName": "level",
     "pluralName": "levels",
     "displayName": "Level",
-    "name": "level"
+    "name": "level",
+    "description": ""
   },
   "options": {
-    "increments": true,
-    "timestamps": true,
     "draftAndPublish": false
   },
   "pluginOptions": {},
@@ -53,6 +52,13 @@
     },
     "wasQuickAssessed": {
       "type": "boolean"
+    },
+    "percentComplete": {
+      "type": "float"
+    },
+    "isCurrentLevel": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
