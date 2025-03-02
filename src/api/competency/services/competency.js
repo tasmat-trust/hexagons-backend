@@ -1,5 +1,9 @@
 'use strict';
 
+const {
+  getStatusFromPercent
+} = require('../../../utils/reports')
+
 /**
  * competency service
  */
@@ -48,12 +52,12 @@ module.exports = createCoreService('api::competency.competency', ({ strapi }) =>
           })
           .first()
           .transacting(trx);
-        const percentComplete = completedCompetencies.count / totalCapabilities.count;
+        const percentComplete = parseInt((completedCompetencies.count / totalCapabilities.count) * 100) ?? 0
+        const status = getStatusFromPercent(percentComplete)
         await knex('levels')
           .where({ id: competency.level })
-          .update({ percent_complete: percentComplete, is_current_level: true })
+          .update({ percent_complete: percentComplete, status: status})
           .transacting(trx);
-        console.log({percentComplete})
       }
 
       // Commit the transaction

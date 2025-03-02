@@ -64,6 +64,24 @@ function getPercentComplete(competencies, capabilities) {
   return parseInt((completeCompetencies.length / capabilities.length) * 100);
 }
 
+function getStatusFromPercent(percent) {
+  if (percent === 100) {
+    return 'complete';
+  } else if (percent > 75) {
+    // Note: In the original code, this doesn't update the status
+    // It only updates the visible percentage
+    return 'secure';
+  } else if (percent > 60) {
+    return 'secure';
+  } else if (percent > 25) {
+    return 'developing';
+  } else if (percent >= 0) {
+    return 'emerging';
+  } else {
+    return 'notstarted';
+  }
+}
+
 function calculateCompetenciesForThisLevel(allComps, capabilitiesToMatch) {
   if (allComps && allComps.length > 0 && capabilitiesToMatch) {
     const capString = JSON.stringify(capabilitiesToMatch);
@@ -104,30 +122,47 @@ function sortLevels(levels) {
   return sortedLevels;
 }
 
-function getCurrentLevel(jumbledLevels) {
+async function getCurrentLevel(jumbledLevels) {
   const levels = sortLevels(jumbledLevels);
   // Get highest level with activity
   const activeLevels = levels.filter((level) => level.status);
   const level = activeLevels[activeLevels.length - 1]; // get last item
 
-  if (
-    level &&
-    level.wasQuickAssessed === true &&
-    level.status &&
-    level.module
-  ) {
-    level["percentComplete"] = getPercentFromStatus(level.status);
+  if (!level || !level.module) return false;
+
+  if (level.wasQuickAssessed === true) {
+    level.percentComplete = getPercentFromStatus(level.status);
   }
 
-  if (level && level.status && !level.wasQuickAssessed && level.module) {
+  if (!level.wasQuickAssessed) {
     const competencies = calculateCompetenciesForThisLevel(
       level.competencies,
       level.module.capabilities
     );
-    level["percentComplete"] = getPercentComplete(
+    level.percentComplete = getPercentComplete(
       competencies,
       level.module.capabilities
     );
+    level.status = getStatusFromPercent(level.percentComplete)
+  }
+
+  // Save the calculated percentComplete to the database
+  if (level.percentComplete) {
+    const knex = strapi.db.connection;
+    try {
+      // Update only this level - don't try to update all levels for the pupil
+      // This avoids deadlocks by limiting the scope of our update
+      await knex('levels')
+        .where({ id: level.id })
+        .update({
+          percent_complete: level.percentComplete,
+          status: level.status,
+          updated_at: new Date()
+        });
+    } catch (error) {
+      console.error('Error updating level:', error);
+      // Continue even if save fails - we still want to return the level
+    }
   }
 
   return level;
@@ -155,4 +190,5 @@ module.exports = {
   getCurrentLevel,
   getModuleLabel,
   sortSubjects,
+  getStatusFromPercent
 };
