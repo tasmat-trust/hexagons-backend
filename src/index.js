@@ -73,6 +73,10 @@ const getPupilReport = async (
     const currentLevel = await getCurrentLevel(withLevelStatus);
     if (currentLevel) {
       const score = getModuleLabel(currentLevel);
+
+      // Create or update PupilSubjectScore when generating reports
+      await updatePupilSubjectScore(pupil.id, subject.id, score);
+
       return {
         id: subject.id,
         subject: subject,
@@ -94,6 +98,47 @@ const getPupilReport = async (
     subjectReports: pupilSubjectReports,
   };
 };
+
+/**
+ * Helper function to update the PupilSubjectScore
+ */
+async function updatePupilSubjectScore(pupilId, subjectId, score) {
+  try {
+    // Check if a PupilSubjectScore already exists
+    const existingScores = await strapi.entityService.findMany('api::pupil-subject-score.pupil-subject-score', {
+      filters: {
+        pupil: pupilId,
+        subject: subjectId
+      }
+    });
+
+    if (existingScores && existingScores.length > 0) {
+      // Update the existing score
+      await strapi.entityService.update('api::pupil-subject-score.pupil-subject-score', existingScores[0].id, {
+        data: {
+          current_score: score,
+          publishedAt: new Date()
+        }
+      });
+
+      console.log(`Updated PupilSubjectScore for pupil ${pupilId} and subject ${subjectId} with score ${score}`);
+    } else {
+      // Create a new score
+      await strapi.entityService.create('api::pupil-subject-score.pupil-subject-score', {
+        data: {
+          pupil: pupilId,
+          subject: subjectId,
+          current_score: score,
+          publishedAt: new Date()
+        }
+      });
+
+      console.log(`Created new PupilSubjectScore for pupil ${pupilId} and subject ${subjectId} with score ${score}`);
+    }
+  } catch (error) {
+    console.error('Error updating PupilSubjectScore:', error);
+  }
+}
 
 module.exports = {
   /**
@@ -122,20 +167,20 @@ module.exports = {
           isCore: Boolean
           subjects: [Subject]
         }
-    
+
         type PupilReport {
           id: ID
-          name: String              
+          name: String
           subjectReports: [PupilSubjectReport]
         }
 
         type GroupReport {
           id: ID
-          name: String 
+          name: String
           groupedSubjects: [ParentSubject]
           pupils: [PupilReport]
         }
-    
+
         `,
 
       resolvers: {
@@ -170,14 +215,14 @@ module.exports = {
             pagination: { limit: -1 },
           });
           if (!subjects) throw new Error("Subjects not found");
-          
+
           const { groupedSubjects, flattenedSubjects } = sortSubjects(subjects.results);
 
           const group = await strapi.services["api::group.group"].findOne(groupId, {
             populate: ["pupils"],
           });
           if (!group) throw new Error("Group not found");
-          
+
           if (group.orgId && group.orgId !== orgId) {
             throw new Error("Incorrect organisation for this group");
           }

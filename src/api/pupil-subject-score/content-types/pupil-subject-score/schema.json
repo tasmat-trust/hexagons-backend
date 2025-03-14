@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pupil_subject_scores",
+  "info": {
+    "singularName": "pupil-subject-score",
+    "pluralName": "pupil-subject-scores",
+    "displayName": "pupilSubjectScore"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pupil": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pupil.pupil"
+    },
+    "subject": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::subject.subject"
+    },
+    "current_score": {
+      "type": "decimal"
+    }
+  }
+}
