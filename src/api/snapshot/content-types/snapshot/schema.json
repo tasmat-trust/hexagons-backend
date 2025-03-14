@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "snapshots",
+  "info": {
+    "singularName": "snapshot",
+    "pluralName": "snapshots",
+    "displayName": "Snapshot",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "targetDate": {
+      "type": "date"
+    },
+    "targets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::target.target",
+      "mappedBy": "snapshot"
+    }
+  }
+}
