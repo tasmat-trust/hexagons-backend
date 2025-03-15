@@ -35,6 +35,11 @@
     },
     "target_score": {
       "type": "decimal"
+    },
+    "pupilSubjectScore": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::pupil-subject-score.pupil-subject-score"
     }
   }
 }
