@@ -30,9 +30,6 @@
     "initial_score": {
       "type": "decimal"
     },
-    "current_score": {
-      "type": "decimal"
-    },
     "target_score": {
       "type": "decimal"
     },
