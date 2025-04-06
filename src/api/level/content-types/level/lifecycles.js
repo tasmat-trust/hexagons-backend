@@ -1,5 +1,7 @@
 'use strict';
 
+const { calculateScore } = require('../../../../utils/scoreCalculation');
+
 /**
  * Lifecycle hooks for the Level model
  * This file implements the afterUpdate and afterCreate hooks to automatically create or update
@@ -41,24 +43,15 @@ async function updatePupilSubjectScore(event) {
       return;
     }
 
-    // Calculate the score directly from the level data
-    let score;
-
-    // Get the normalized module number (1-12 scale)
-    const moduleLevel = level.module.level;
-    const moduleOrder = level.module.order;
-    const normalisedModuleNumber = moduleLevel === "stage" ? moduleOrder + 6 : moduleOrder;
-
     // Handle both percentComplete and percent_complete field names
     const percentComplete = level.percentComplete || level.percent_complete || 0;
 
-    // If the level is 100% complete, round up to the next level
-    if (percentComplete === 100) {
-      score = normalisedModuleNumber + 1;
-    } else {
-      // Otherwise use the current module number with the percentage
-      score = `${normalisedModuleNumber}.${percentComplete}`;
-    }
+    // Calculate the score using the utility function
+    const score = calculateScore({
+      moduleLevel: level.module.level,
+      moduleOrder: level.module.order,
+      percentComplete
+    });
 
     // Check if a PupilSubjectScore already exists for this pupil and subject
     const existingScores = await strapi.entityService.findMany('api::pupil-subject-score.pupil-subject-score', {

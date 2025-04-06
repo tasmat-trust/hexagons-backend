@@ -4,6 +4,8 @@ const {
   getStatusFromPercent
 } = require('../../../utils/reports')
 
+const { calculateScore } = require('../../../utils/scoreCalculation');
+
 /**
  * competency service
  */
@@ -109,17 +111,12 @@ module.exports = createCoreService('api::competency.competency', ({ strapi }) =>
       const pupilId = level.pupil.id;
       const subjectId = level.subject.id;
 
-      // Calculate the score
-      const moduleLevel = level.module.level;
-      const moduleOrder = level.module.order;
-      const normalisedModuleNumber = moduleLevel === "stage" ? moduleOrder + 6 : moduleOrder;
-
-      let score;
-      if (percentComplete === 100) {
-        score = normalisedModuleNumber + 1;
-      } else {
-        score = `${normalisedModuleNumber}.${percentComplete}`;
-      }
+      // Calculate the score using the utility function
+      const score = calculateScore({
+        moduleLevel: level.module.level,
+        moduleOrder: level.module.order,
+        percentComplete
+      });
 
       // Check if a PupilSubjectScore already exists
       const existingScores = await strapi.entityService.findMany('api::pupil-subject-score.pupil-subject-score', {

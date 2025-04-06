@@ -1,5 +1,7 @@
 'use strict';
 
+const { calculateScore } = require('../../../../utils/scoreCalculation');
+
 /**
  * Lifecycle hooks for the Snapshot model
  * This file implements the afterCreate hook to automatically create PupilSubjectScores
@@ -91,21 +93,15 @@ async function createPupilSubjectScores(event) {
           const level = levels[0]; // Most recent level
           
           if (level.module) {
-            // Get the normalized module number (1-12 scale)
-            const moduleLevel = level.module.level;
-            const moduleOrder = level.module.order;
-            const normalisedModuleNumber = moduleLevel === "stage" ? moduleOrder + 6 : moduleOrder;
-            
             // Handle both percentComplete and percent_complete field names
             const percentComplete = level.percentComplete || level.percent_complete || 0;
             
-            // If the level is 100% complete, round up to the next level
-            if (percentComplete === 100) {
-              score = normalisedModuleNumber + 1;
-            } else {
-              // Otherwise use the current module number with the percentage
-              score = `${normalisedModuleNumber}.${percentComplete}`;
-            }
+            // Calculate the score using the utility function
+            score = calculateScore({
+              moduleLevel: level.module.level,
+              moduleOrder: level.module.order,
+              percentComplete
+            });
           }
         }
         
