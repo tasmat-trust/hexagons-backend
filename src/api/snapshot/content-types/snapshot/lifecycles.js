@@ -26,7 +26,7 @@ async function createPupilSubjectScores(event) {
   try {
     // Get all pupils
     const pupils = await strapi.entityService.findMany('api::pupil.pupil', {
-      fields: ['id', 'name'],
+      fields: ['id', 'name', 'targetLevel'],
     });
     
     // Get all subjects
@@ -38,7 +38,14 @@ async function createPupilSubjectScores(event) {
     
     // Get all existing PupilSubjectScores to avoid duplicates
     const existingScores = await strapi.entityService.findMany('api::pupil-subject-score.pupil-subject-score', {
-      populate: ['pupil', 'subject'],
+      populate: {
+        pupil: {
+          fields: ['id', 'name', 'targetLevel']
+        },
+        subject: {
+          fields: ['id', 'name']
+        }
+      },
       pagination: { limit: -1 }
     });
     
@@ -124,7 +131,14 @@ async function createPupilSubjectScores(event) {
       const createPromises = batch.map(scoreData => 
         strapi.entityService.create('api::pupil-subject-score.pupil-subject-score', { 
           data: scoreData,
-          populate: ['pupil', 'subject']
+          populate: {
+            pupil: {
+              fields: ['id', 'name', 'targetLevel']
+            },
+            subject: {
+              fields: ['id', 'name']
+            }
+          }
         })
       );
       const batchResults = await Promise.all(createPromises);
@@ -163,8 +177,26 @@ async function createTargetsFromScores(event, pupilSubjectScores) {
       let currentScore = parseFloat(score.current_score);
       if (isNaN(currentScore)) currentScore = 0;
       
-      // Calculate target score (current + 0.4)
-      const targetScore = currentScore + 0.4;
+      // Get pupil's targetLevel to determine increment
+      let targetIncrement;
+      if (score.pupil.targetLevel) {
+        switch (score.pupil.targetLevel) {
+          case 'small':
+            targetIncrement = 0.2;
+            break;
+          case 'large':
+            targetIncrement = 0.5;
+            break;
+          case 'medium':
+          default:
+            targetIncrement = 0.4;
+        }
+      } else {
+        targetIncrement = 0.4; // default for medium
+      }
+      
+      // Calculate target score (current + targetLevel increment)
+      const targetScore = currentScore + targetIncrement;
       
       // Add to batch
       targetsToCreate.push({

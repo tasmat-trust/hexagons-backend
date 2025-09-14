@@ -27,6 +27,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::organization.organization"
+    },
+    "targetLevel": {
+      "type": "enumeration",
+      "enum": ["small", "medium", "large"],
+      "default": "medium"
     }
   }
 }
